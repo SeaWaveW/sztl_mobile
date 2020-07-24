@@ -59,7 +59,7 @@ export default {
                 this.totalPages = totalPages
                 this.orderList = [...this.orderList,...data]
             }
-            console.log(this.orderList)
+            // console.log(this.orderList)
         },
         //跳转至当前点击的订单页面
         orderInfoClick(id){

@@ -94,8 +94,13 @@ export default {
             //     }
             // })
             //本地存储方式
-            sessionStorage.setItem("orderInfo",JSON.stringify([this.ProductDetailData]))
-            this.$router.push("/orderConfirm")
+            // sessionStorage.setItem("orderInfo",JSON.stringify([this.ProductDetailData]))
+            this.$router.push({
+                path:"/orderConfirm",
+                query:{
+                    go:-1
+                }
+            })
         }
 
     },

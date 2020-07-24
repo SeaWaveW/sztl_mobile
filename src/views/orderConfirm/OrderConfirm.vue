@@ -127,7 +127,8 @@ export default {
             }
             this.productInfoList.push(orderObj)
         })
-        // console.log(this.productInfoList)
+
+        console.log(this.$route)
     },
     beforeDestroy() {
         this.changeSelectAddress({})

@@ -52,19 +52,28 @@ export default {
             this.pay_password = ""
             this.errorInfo = ""
             //跳转至当前订单的详情页
-            this.$router.push({
-                path:"/orderInfo",
-                query:{
-                    id:this.orderId
-                }
-            })
+            if(this.$route.query.go){
+                this.$router.push({
+                    path:"/orderInfo",
+                    query:{
+                        id:this.orderId,
+                        go:this.$route.query.go -1
+                    }
+                })
+            }
+            
         },
         
         //付款请求
         async orderPayment(pay_password){
             const result = await reqOrderPayment(this.orderId,pay_password)
             if(result.errcode === 0){
-                this.$router.push("/paySuccess")
+                this.$router.push({
+                    path:"/paySuccess",
+                    query:{
+                        go:this.$route.query.go -1
+                    }
+                })
                 this.showKeyboard = false
                 this.pay_password = ""
                 this.errorInfo = ""

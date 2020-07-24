@@ -36,7 +36,11 @@ export default {
             console.log(this.$route)
             if(this.$route.path.indexOf("/home")>=0){
                 this.$router.push("/citySelect")
-            }else{
+            }
+            else if(this.$route.query.go){
+                this.$router.go(this.$route.query.go)
+            }
+            else{
                 this.$router.back()
             }
         }
