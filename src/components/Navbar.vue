@@ -7,7 +7,7 @@
             <span class="leftText">{{$store.state.selectCity}}</span>
         </template>
         <template #left v-else > <!-- 第二层else -->
-            <van-icon name="arrow-left" v-if="isCity"/> <!-- 第三层if -->
+            <van-icon name="arrow-left" /> <!-- 第三层if -->
             <span class="leftText" style="color:#1989fa">{{isCity ? $store.state.selectCity : "返回"}}</span>
         </template>
 
@@ -33,6 +33,7 @@ export default {
     }},
     methods:{
         leftClick(){
+            console.log(this.$route)
             if(this.$route.path.indexOf("/home")>=0){
                 this.$router.push("/citySelect")
             }else{

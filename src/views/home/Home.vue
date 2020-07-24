@@ -3,7 +3,7 @@
     <!-- 主体 -->
     <main ref="main" @scroll="mainScroll">
         <div class="productItem" v-for="item in productList" :key="item.id" @click="productDetailClick(item.id)">
-            <img :src="item.cover" alt="">
+            <img v-lazy="item.cover" alt="">
             <div class="Info">
                 <h3>{{item.name}}</h3>
                 <span>￥{{item.price | fprice}}</span>
@@ -14,8 +14,9 @@
 
     <!-- 底部 -->
     <Tabbar :active="0"></Tabbar>
-    <!-- <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Efso3dSzxlw2V1Py3x5OS3HsF3cUOLwU"></script> -->
     
+    <!-- 返回顶部 -->
+    <BackTop v-if="backFlag" @click.native="backTopClick"></BackTop>
 </div>
 </template>
     
@@ -23,12 +24,17 @@
 import Navbar from '../../components/Navbar.vue';
 import Tabbar from '../../components/Tabbar.vue';
 import {reqProduct} from "network/api";
-import {mapMutations} from 'vuex';  
+import {mapMutations} from 'vuex'; 
+
+import BackTop from '../../components/BackTop.vue';
+import mix from 'mixin/mix.js';
+
 export default {
     name:"Home",
     components:{
-        Navbar,Tabbar
+        Navbar,Tabbar,BackTop
     },
+    mixins:[mix],
     data(){return{
         params:{ //请求商品列表所需的信息
             page:1,
@@ -47,14 +53,18 @@ export default {
             if(result.errcode === 0){
                 const {totalPages,data} = result.data
                 this.totalPages = totalPages
-                // this.productList.push(data)
                 this.productList = [...this.productList,...data]
-                // console.log(this.productList)
             }
             this.reqFlag = false
         },
-        //
+        
+        // 滚动
         mainScroll(){
+            if(this.$refs.main.scrollTop >= 1500 ){
+                this.backFlag = true
+            }else{
+                this.backFlag = false
+            }
             // 滚动距离 + 可见高度  >  可滚动高度 -1
             if(this.$refs.main.scrollTop + this.$refs.main.clientHeight > this.$refs.main.scrollHeight -1){
                 if(this.reqFlag){
@@ -65,7 +75,6 @@ export default {
                 }
                 this.params.page++
                 this.getProductList()
-
             }
             
         },
@@ -86,7 +95,7 @@ export default {
                 if(this.getStatus() == BMAP_STATUS_SUCCESS){
                     let province = r.address.province //返回当前省份
                     let city = r.address.city//返回当前城市
-                    console.log(r)
+                    // console.log(r)
                     that.editSelectCity(city)
                 }
                 
@@ -126,7 +135,8 @@ export default {
                 overflow-wrap: normal;
                 padding: 0 2.1333333333333333vw;
                 h3{
-                    font-size: 2.0989505247376314vh;
+                    // font-size: 2.0989505247376314vh;
+                    font-size: 14px;
                     margin: 0.7496251874062968vh 0;
                     white-space: nowrap;
                     overflow-x: hidden;

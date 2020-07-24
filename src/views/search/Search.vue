@@ -18,15 +18,23 @@
                 <span>￥{{item.price | fprice}}</span>
             </div>
         </div>
-        
     </main>
+    <!-- 返回顶部 -->
+    <BackTop v-if="backFlag" @click.native="backTopClick"></BackTop>
 </div>
 </template>
     
 <script>
 import {reqProduct} from "network/api"
+
+import BackTop from '../../components/BackTop.vue';
+import mix from 'mixin/mix.js';
+
 export default {
     name:"Search",
+    components:{
+        BackTop
+    },
     data(){return{
         //请求参数
         params:{
@@ -46,6 +54,7 @@ export default {
         oldSearch:""
 
     }},
+    mixins:[mix],
     methods:{
         //防抖函数
         debounce(fn){
@@ -88,6 +97,11 @@ export default {
         //
         mainScroll(){
             // 滚动距离 + 可见高度  >  可滚动高度 -1
+            if(this.$refs.main.scrollTop >= 1500 ){
+                this.backFlag = true
+            }else{
+                this.backFlag = false
+            }
             if(this.$refs.main.scrollTop + this.$refs.main.clientHeight > this.$refs.main.scrollHeight -1){
                 if(this.reqFlag){
                     return

@@ -17,6 +17,7 @@ module.exports = {
             .set('store', resolve('src/store')) //src->store目录
             .set('tools', resolve('src/tools')) //src->tools目录
             .set('views', resolve('src/views')) //src->views目录
+            .set('mixin', resolve('src/mixin')) //src->mixin目录
     },
     devServer: {
     // host: 'localhost', // ip
@@ -35,5 +36,28 @@ module.exports = {
                 // }
             }
         }
-  }
+    },
+    css: {
+        loaderOptions: {
+          postcss: {
+            plugins: [
+              require("postcss-px-to-viewport")({
+                unitToConvert: "px",
+                viewportWidth: 375,
+                unitPrecision: 3,
+                propList: [
+                  "*"
+                ],
+                viewportUnit: "vw",
+                fontViewportUnit: "vw",
+                selectorBlackList: [],
+                minPixelValue: 1,
+                mediaQuery: false,
+                replace: true,
+                exclude: /(\/|\\)(node_modules)(\/|\\)/,
+              })
+            ]
+          }
+        }
+    }
 }

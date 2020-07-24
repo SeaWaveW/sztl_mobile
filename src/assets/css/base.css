@@ -80,12 +80,12 @@ th:not([align]) {
   text-align: left;
 }
 
-html,body,#app{
+/* html,body,#app{
     width:100%;
     height:100%;
     box-sizing:border-box;
     word-break:break-all
-}
+} */
 /* element-ul */  
 #app>div>.el-container{
     width: 100%;

@@ -23,6 +23,17 @@ store.dispatch("getCityList")
 // 调用vuex的定位
 // store.dispatch("getCurrenPosition")
 
+// 图片懒加载
+import VueLazyload from 'vue-lazyload'
+Vue.use(VueLazyload,{
+  error: require('assets/img/LoadFailed.jpg'),
+  loading: require('assets/img/loading.gif'),
+})
+
+//解决移动端300ms延迟
+import fastClick from 'fastclick'
+fastClick.attach(document.body)
+
 new Vue({
   router,
   store,
